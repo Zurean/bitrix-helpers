@@ -1,0 +1,21 @@
+{
+  "name": "oip/bitrix-helpers",
+  "description": "Collection of classes for routine operations with Bitrix",
+  "version": "0.1.0",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "rodel",
+      "email": "rodeljob@gmail.com"
+    }
+  ],
+  "homepage": "https://github.com/Zurean/bitrix-helpers",
+  "require": {
+    "php": ">=7.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "OIP\\BitrixHelpers\\": "src/"
+    }
+  }
+}

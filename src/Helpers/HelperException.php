@@ -1,6 +1,6 @@
 <?php
 
-namespace Otdel\Helpers;
+namespace OIP\Helpers;
 use Exception;
 
 class HelperException extends Exception

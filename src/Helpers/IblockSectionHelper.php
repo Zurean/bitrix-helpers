@@ -285,4 +285,25 @@ class IblockSectionHelper extends  Helper
 
         return $arUFFields;
     }
+
+
+/*    public function getLinkedIDs($iblockID,$ufProp,$valueID) {
+        $finalFilter = ['IBLOCK_ID'=>$iblockID,'UF_'.$ufProp => $valueID];
+
+        if(\CModule::IncludeModule('iblock')) {
+            $linked = $this->dbResultFetch((new \CIBlockSection())->GetList([],$finalFilter,false,
+                ['ID','IBLOCK_CODE','IBLOCK_ID']));
+
+            $linkedFinal = [];
+            foreach($linked as $sect) {
+                $linkedFinal[] =  $sect['ID'];
+            }
+
+            return $linkedFinal;
+
+        }
+        else {
+            throw new HelperException('Не установлен модуль "iblock"');
+        }
+    }*/
 }

@@ -5,7 +5,7 @@ class IblockSectionHelper extends  Helper
 {
 
     /**
-     * @param null|string $iblockCode
+     * @param null|string|int $iblock
      * @param null|array $filterParams
      * @param null|array $selectParams
      * @param null|array $ufProps
@@ -14,7 +14,7 @@ class IblockSectionHelper extends  Helper
      *
      * @throws HelperException
      * */
-    public function getSections($iblockCode = null, $filterParams = [], $selectParams = [], $ufProps = [],
+    public function getSections($iblock = null, $filterParams = [], $selectParams = [], $ufProps = [],
                                 $sortParams = [])
     {
 
@@ -26,18 +26,27 @@ class IblockSectionHelper extends  Helper
             'ID','NAME','CODE','IBLOCK_ID','IBLOCK_SECTION_ID','SORT','LIST_PAGE_URL','SECTION_PAGE_URL'
         ];
 
+        $iblockID = ($iblock && is_int($iblock)) ? $iblock : null;
+        $iblockCode = ($iblock && is_string($iblock)) ? $iblock : null;
+
         if($iblockCode) {
             $filterDefault['IBLOCK_CODE'] = $iblockCode;
         }
 
         if(!empty($ufProps)) {
-            if(!$iblockCode) {
-                throw new HelperException('Не задан код инфоблока');
+            if(!$iblockCode && !$iblockID) {
+                throw new HelperException('Не задан инфоблок');
             }
 
-            $iblockID = (new IblockHelper)->getIblockIdByCode($iblockCode);
-            $filterDefault['IBLOCK_ID'] = $iblockID;
+            if(!$iblockID && $iblockCode) {
+                $iblockID = (new IblockHelper)->getIblockIdByCode($iblockCode);
+            }
+
             $selectDefault = array_merge($ufProps,$selectDefault);
+        }
+
+        if($iblockID) {
+            $filterDefault['IBLOCK_ID'] = $iblockID;
         }
 
 
@@ -168,16 +177,16 @@ class IblockSectionHelper extends  Helper
     }
 
     /**
-     * @param null|string $iblockCode
+     * @param null|string|int $iblock
      * @param null|array $filterParams
      * @param null|array $selectParams
      * @param null|array $ufProps
      * @return array
      * @throws HelperException
      * */
-    public function getSectionTree($iblockCode = null, $filterParams = [], $selectParams = [], $ufProps = []) {
+    public function getSectionTree($iblock = null, $filterParams = [], $selectParams = [], $ufProps = []) {
         $sortParams = ["left_margin"=>"asc"];
-        return $this->getSections($iblockCode,$filterParams,$selectParams,$ufProps,$sortParams);
+        return $this->getSections($iblock,$filterParams,$selectParams,$ufProps,$sortParams);
     }
 
     /**

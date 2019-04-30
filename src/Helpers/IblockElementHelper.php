@@ -129,5 +129,32 @@ class IblockElementHelper extends Helper
         return $els;
     }
 
+    /**
+     * @param string $code
+     * @param string $prop
+     * @param int $id
+     * @return array
+     *
+     * @throws HelperException
+    */
+    public function getLinkedIDs($code,$prop,$id) {
 
+
+        $finalFilter = ['IBLOCK_CODE'=>$code,'PROPERTY_'.$prop => $id];
+
+        if(\CModule::IncludeModule('iblock')) {
+           $linked = $this->dbResultFetch((new \CIBlockElement())->GetList([],$finalFilter,false,false,['ID','IBLOCK_CODE','IBLOCK_ID']));
+
+           $linkedFinal = [];
+           foreach($linked as $el) {
+               $linkedFinal[] =  $el['ID'];
+           }
+
+           return $linkedFinal;
+
+        }
+        else {
+            throw new HelperException('Не установлен модуль "iblock"');
+        }
+    }
 }
